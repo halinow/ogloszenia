@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Halinów 05-074 - Ogłoszenia</title>
+    <link rel="stylesheet" href="ogloszenia-style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2563eb">
+    <meta name="description" content="Ogłoszenia mieszkańców Halinowa 05-074. Sprzedaż, kupno, pomoc sąsiedzka - wszystko w jednym miejscu!">
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-home"></i>
+                <div class="logo-text">
+                    <h1>Halinów 05-074</h1>
+                    <span>Ogłoszenia</span>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="add-post-btn" id="addPostBtn">
+                    <i class="fas fa-plus"></i>
+                    Dodaj ogłoszenie
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Search and Filters -->
+    <div class="search-section">
+        <div class="search-container">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Szukaj ogłoszeń...">
+            </div>
+            <div class="filters">
+                <button class="filter-btn active" data-filter="all">
+                    <i class="fas fa-list"></i>
+                    Wszystkie
+                </button>
+                <button class="filter-btn" data-filter="sprzedaz">
+                    <i class="fas fa-tag"></i>
+                    Sprzedaż
+                </button>
+                <button class="filter-btn" data-filter="kupno">
+                    <i class="fas fa-shopping-cart"></i>
+                    Kupno
+                </button>
+                <button class="filter-btn" data-filter="pomoc">
+                    <i class="fas fa-hands-helping"></i>
+                    Pomoc
+                </button>
+                <button class="filter-btn" data-filter="uslugi">
+                    <i class="fas fa-tools"></i>
+                    Usługi
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Stats -->
+        <div class="stats-section">
+            <div class="stat-card">
+                <i class="fas fa-newspaper"></i>
+                <span class="stat-number" id="totalPosts">0</span>
+                <span class="stat-label">Ogłoszeń</span>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-users"></i>
+                <span class="stat-number" id="activeUsers">0</span>
+                <span class="stat-label">Aktywnych</span>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-clock"></i>
+                <span class="stat-number" id="todayPosts">0</span>
+                <span class="stat-label">Dzisiaj</span>
+            </div>
+        </div>
+
+        <!-- Posts Grid -->
+        <div class="posts-container" id="postsContainer">
+            <!-- Posts will be loaded here -->
+        </div>
+
+        <!-- Load More Button -->
+        <div class="load-more-section">
+            <button class="load-more-btn" id="loadMoreBtn">
+                <i class="fas fa-plus"></i>
+                Załaduj więcej
+            </button>
+        </div>
+    </main>
+
+    <!-- Add Post Modal -->
+    <div id="addPostModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Dodaj ogłoszenie</h3>
+                <button class="close-btn" id="closeModalBtn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="addPostForm" class="post-form">
+                <div class="form-group">
+                    <label for="postTitle">Tytuł ogłoszenia *</label>
+                    <input type="text" id="postTitle" placeholder="np. Sprzedam rower górski" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="postCategory">Kategoria *</label>
+                    <select id="postCategory" required>
+                        <option value="">Wybierz kategorię</option>
+                        <option value="sprzedaz">Sprzedaż</option>
+                        <option value="kupno">Kupno</option>
+                        <option value="pomoc">Pomoc</option>
+                        <option value="uslugi">Usługi</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="postDescription">Opis *</label>
+                    <textarea id="postDescription" rows="4" placeholder="Opisz szczegółowo co oferujesz lub czego szukasz..." required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="postPrice">Cena (opcjonalnie)</label>
+                    <input type="text" id="postPrice" placeholder="np. 500 zł, do uzgodnienia, za darmo">
+                </div>
+
+                <div class="form-group">
+                    <label for="postLocation">Lokalizacja *</label>
+                    <input type="text" id="postLocation" placeholder="np. Halinów, ul. Główna" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="postContact">Kontakt *</label>
+                    <input type="text" id="postContact" placeholder="Telefon lub email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="postName">Twoje imię (opcjonalnie)</label>
+                    <input type="text" id="postName" placeholder="Jak Cię nazywać?">
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" id="cancelBtn">Anuluj</button>
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-paper-plane"></i>
+                        Opublikuj ogłoszenie
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Post Details Modal -->
+    <div id="postDetailsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalPostTitle">Szczegóły ogłoszenia</h3>
+                <button class="close-btn" id="closeDetailsBtn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="post-details" id="postDetails">
+                <!-- Post details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Modal -->
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Skontaktuj się</h3>
+                <button class="close-btn" id="closeContactBtn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="contact-info" id="contactInfo">
+                <!-- Contact info will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Action Button -->
+    <button class="fab" id="fabBtn">
+        <i class="fas fa-plus"></i>
+    </button>
+
+    <!-- Notification Container -->
+    <div id="notificationContainer" class="notification-container"></div>
+
+    <script src="ogloszenia-script.js"></script>
+</body>
+</html>
